@@ -1,0 +1,548 @@
+let age : number  = 25;
+
+// let age  = 25;
+
+
+
+/* 
+ * function (a,b){
+ * retun a + b;
+ * }
+ */
+
+
+console.log(age);
+console.log(add(1,2));
+
+
+let count : number  = 10;
+
+
+let message : string = 'Hello, typescript!';
+
+function greet (name: string) : void {
+	console.log(`Hello, ${name}`);
+};
+
+function add(a: number, b: number): number{
+  return a + b;
+};
+
+
+// aca solo trabajamos de la siguiente manera 
+
+/* 
+ * las variables que se trabajan son 
+ *
+ * let  --- variable de cambio 
+ * const -- variable de un solo uso
+ *
+ */
+
+// podemos declarar varias variables de la siguiente forma
+
+let x: number, y: number, z: number; 
+
+// anotaciones opcionales que se le puede asignar a la variable 
+
+let age : number | undefined;
+age = 30; // esto es valido
+age  = undefined; // esto tambien es valido
+
+// si queremos inducir datos de manera opcional lo podemos hacer la siguiente manera
+
+interface Person {
+	name: string; 
+	age?: number; // esta es la propiedad opcional
+}
+
+
+function createPerson (name: string, age?:number): Person { 
+	const person : Person = {name};
+	if (age !== undefined) {
+		person.age = age;
+	}
+	return person;
+}
+// ahora trabajando con el tipo ANY --> acepta cualquier valor : 'confia en mi, yo me encargo'
+
+let data : any;
+data = 32;
+data = 'hello';
+data = true;
+
+
+// Tenemos los datos primitivos en Typescript 
+
+// NUMBER 
+
+let integer : number = 42;
+let floating : number = 3.14;
+let negative : number = -10;
+
+let binary : number = 0b1010;
+let octal : number = 0o12;
+let hexadecimal : number = 0xA;
+
+
+// STRING 
+
+let cSimple : string  = 'hello';
+let cDoble : string = "hello";
+let bacticks : string = `hello`;
+let bacticksV : string = `hello ${name}`;
+
+// BOOLEAN
+
+let isActive : boolean = true;
+let hasError : boolean = true;
+let isGreater : boolean = 10>5;
+
+
+// NULL / UNDEFINED
+
+let emptyVar : null = null;
+let unIVar : undefined = undefined;
+let optionalVar : string | null =  null;
+
+// Operadores Aritmeticos 
+
+let n1 = 10;
+let n2 = 5;
+
+console.log(a + b);
+console.log(a - b);
+console.log(a * b);
+console.log(a / b);
+console.log(a % b);
+
+
+// Operadores de comparacion
+
+console.log(a  == b);
+console.log(a  != b);
+console.log(a  === b);
+console.log(a  !== b);
+console.log(a  > b);
+console.log(a  < b);
+console.log(a  >= b);
+console.log(a  <= b);
+
+
+// Operadores Logicos
+
+console.log(a && b);
+console.log(a || b);
+console.log(!a);
+
+
+// Operadores de asignacion
+
+
+a += b; // a = a + b => a = 15
+a -= b; // a = a - b => a = 10
+a *= b; // a = a * b => a = 50 
+a /= b; // a = a / b => a = 10
+a %= b; // a = a % b => a = 0
+
+
+// Flujos de control 
+
+// if - else
+
+let age = 18;
+
+if(age >= 18){
+	console.log('you are an adult');
+}else{
+	console.log('you are not an adult');
+}
+
+// if - else -if else
+
+let score = 85;
+
+if(score >= 90){
+	console.log('Grade A');
+}else if(score >= 80){
+	console.log('Grade B');
+}else if(score >= 70){
+	console.log('Grade C');
+}else if(score >= 60){
+	console.log('Grade D');
+}
+
+// SWITCH 
+
+let dayOfWeek  = 3;
+let dayName : string;
+
+switch(dayOfWeek){
+	case 1: 
+		dayName = "Monday";
+		break;
+
+	case 1: 
+		dayName = "Monday";
+		break;
+	case 2: 
+		dayName = "Tuesday";
+		break;
+	case 3: 
+		dayName = "Wednesday";
+		break;
+	case 4: 
+		dayName = "Thursday";
+		break;
+	case 5: 
+		dayName = "Friday";
+		break;
+	case 6: 
+		dayName = "Saturday";
+		break;
+	case 7: 
+		dayName = "Sunday";
+		break;
+}
+
+console.log(dayName);
+
+
+
+// FOR 
+
+for (let i = 0; i < 5; i++){
+	console.log(i);
+}
+
+// WHILE 
+
+while(i < 5){
+	console.log(i);
+	i++;
+}
+
+// FOR OF 
+
+let names = ['alice', 'bob', 'charlie'];
+for (let name of names){
+	console.log(name);
+}
+
+// FOR IN 
+
+let per = {
+	firstName : 'Alice',
+	lastName : 'Smith'
+}
+
+for (let key in person) {
+	console.log(`${key} : ${person[key]}`);
+}
+
+
+// DEFINICION DE UNA FUNCION
+
+function great(name : string) : string { 
+	return `Hello ${name}`;
+}
+
+let greating = great('ramon');
+console.log(greating);
+
+// reduciendo la funcion a una funcion flecha 
+
+const geat = (name : string) : string =>{
+	return `Hello ${name}`;
+}
+console.log(geat);
+
+
+// Funcion Parametros 
+
+function add ( a: number, b:number){
+	return a + b;
+}
+
+let sum = add(10,20);
+
+// funcion con parametros opcionales
+
+function multiply( a:number, b: number = 1): number {
+	return a * b;
+}
+console.log(multiply(5));
+
+console.log(multiply(5,2));
+
+// concatenando parametros
+
+function concate(a: string, b?: string): string{
+	return b ? `${b}` : a;
+}
+
+console.log(concate('hello'))
+console.log(concate('hello', 'world'))
+
+
+// Retorno de tipos 
+
+function isEven(number : number): boolean { 
+	return number % 2 === 0;
+} 
+
+console.log(isEven(4));
+console.log(isEven(5));
+
+
+// Funcion de primera clase en Typescript
+
+// Funciones como variables
+
+const sayHello = (name : string) => `Hello ${name}`;
+// 
+// Funciones como argumentos
+
+function gray(fn(name:string) => string, name: string){ console.log(fn(name));}
+
+// funciones como retorno de valores 
+
+function multiplier(factor : number) : (num : number) => number {
+	return (num) => num * factor;
+}
+
+const double = multiplier(2);
+console.log(double(3));
+
+// definiciones de los tipos de funciones
+
+
+let convert : (inpt: string) => number;
+convert = (s) => parseInt(s, 10); // el 10 es el tipo de base en el que se cambia -- decimal
+convert = (s) => parseInt(s, 2); // el 2 es el tipo de base en el que se cambia  -- binario
+convert = (s) => parseInt(s, 255); // el 10 es el tipo de base en el que se cambia -- hexadecimal
+convert = (s) => parseInt(s, 8); // el 10 es el tipo de base en el que se cambia -- octal
+console.log(convert("5"));
+
+// ARRAYS Y TUPLAS 
+
+let numbers : number [] = [1,2,3,4,5];
+
+//la forma de declarar un array es de esta forma
+
+let numebrs: Array<number> = [1,2,3,4,5];
+
+// Si nosotros queremos que los valores sean inmutables hacemos lo siguiente 
+
+let readOnlyNumbers : ReadonlyArray<number> = [1,2,3,4,5];
+
+// TUPLAS 
+
+let person : [string, number]  = ['alice', 10];
+
+// haciendo una variable opcional 
+
+let person : [string, number?] = ['alice'];
+
+// indicando el valor de una variable 
+
+let labeledP : [name : string, age:number] = ['alice', 30];
+
+
+// ENUMS --> sirve mas para determinar apartados que ya tengan valores
+
+
+enum Color {
+	Red, 
+	Green, 
+	Blue, 
+}
+
+// Asignando valores
+
+enum Color {
+	Red = 1, 
+	Green = 2, 
+	Blue = 3, 
+}
+
+
+
+let backgroundColor: Color = Color.Blue;
+if(backgroundColor === Color.Blue){
+}
+
+
+// puedes usar para mencionar miembros
+
+enum UserRola {
+	Admin = 'ADMIN',
+	Editor = 'EDITOR',
+	Viewer = 'VIEWER',
+}
+
+
+// INTERFACES
+	
+// -- se recomienda mas hacer uso en Obj
+// -- hacer el uso de Prefijos para interfaces genericas
+
+interface Pers {
+	name : string;
+	age : number;
+	greet() : void ;
+}
+
+let person1 : Person  = {
+	name : 'Alice',
+	age : 30,
+	greet() {
+		console.log(`Hello ${this.name}`);
+	}
+};
+
+
+// para asignar valores opcionales en Interfaces hacemos lo siguiente 
+
+interface Data { 
+	name : string;
+	age : number;
+	email?: string;
+	greet() : void;
+	sayGoodBye?(): void;
+}
+
+let person1 : Data  = {
+	name : 'Alice',
+	age : 30,
+	greet() {
+		console.log(`Hello ${this.name}`);
+	}
+};
+
+
+// EXTENDS : trabajando con extension con interfaces
+
+interface Datos {
+	name : string;
+	age : number;
+	greet(): void;
+}
+
+interface Employee extends Datos {
+	employeeId: number;
+	department: string;
+	clockIn(): void;
+}
+
+
+let employee : Employee = {
+	name : 'alice',
+	age : 30,
+	employeeId : 1234,
+	departament : 'sales',
+	greet(){
+		console.log('Hello ,' + this.name);
+	},
+	clockIn(){
+		console.log(this.name + ' clocked in ');
+	}
+};
+
+// CLASES
+
+class Car { 
+	brand : string;
+	model : string;
+	year : number ; 
+}
+
+let myCar = new Car();
+myCar.brand = 'Toyota';
+myCar.model = 'Corolla';
+myCar.year = 2010;
+
+
+// uan forma de recibir valores de forma mas rapida es de la siguiente manera 
+
+class Carro{
+	brand: string;
+	model: string;
+	year: number; 
+	constructor ( brand: string, model : string, year: number){
+		this.brand = brand;
+		this.model = model;
+		this.year = year;
+	}
+}
+
+
+let miCarro = new Carro('Toyota','Corolla','2010');
+
+// para simplificarlo podemos hacerlo de la siguiente manera 
+
+
+class Caro { 
+	constructor (
+		public brand: string;
+		public model: string;
+		public year: number;
+	){}
+}
+
+
+// Trabajando las herencias en las clases 
+
+
+class Vehicle { 
+	speed: number;
+	constructor(speed : number){
+		this.speed = speed;
+	}
+	move(){
+		console.log(`The vehicle is moving at ${this.speed} miles poer hour`);
+	}
+}
+
+class Carrr extends Vehicle{
+	wheels: number;
+	constructor(speed: number, wheels: number){
+		super(speed); // recuerda que tenemos que usar la herencia para usar la herencia 
+		this.wheels = wheels;
+	}
+	honk(){
+		console.log('beep beep');
+	}
+}
+
+
+// ABSTRACT CLASS -- trabajando con clases abstractas
+
+// -- conlleva mas a PO
+// -- compartir codigo comun entre clases relacionadas 
+// -- propiedades con valores 
+// -- controlar acceso con modificadores (public, protected, private)
+// -- forzar estructura comun pero con implementacion parcial 
+// -- usar constructores para inciializacion comun 
+
+
+
+abstract class Shape{
+	abstract getArea(): number;
+}
+class Circle extends Shape{
+	constructor (public radius: number){
+		super();
+	}
+	getArea(): number{
+		return Math.PI * this.radius ** 2;
+	}
+}
+
+
+// ENCAPSULAMIENTO : PRIVATE / PUBLIC / PROTECTED
+
+
+
+
+
