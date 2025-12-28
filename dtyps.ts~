@@ -542,6 +542,21 @@ class Circle extends Shape{
 
 // ENCAPSULAMIENTO : PRIVATE / PUBLIC / PROTECTED
 
+// trabajo con Public 
+
+class Circulo{
+	radius: number;
+	constructor(radius: number){
+		this.radius = radius;
+	}
+	getArea(): number{
+		return Math.PI * this.radius ** 2;
+	}
+}
+
+const MyCircle = new Circulo(3);
+console.log(MyCircle.radius);
+console.log(MyCircle.getArea());
 
 
 

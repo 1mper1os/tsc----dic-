@@ -559,5 +559,288 @@ console.log(MyCircle.radius);
 console.log(MyCircle.getArea());
 
 
+// ahora se esta trabajara con el 
+// PRIVATE 
 
+class cube{
+	private radius : number;
+	constructor(radius : number){
+		this.radius = radius;
+	}
+
+	getArea() : number{
+		return Math.PI * this.radius ** 2;
+	}
+
+	getRadius(): number{
+		return this.radius;
+	}
+}
+
+const myCube = new Cube(3);
+
+// esto me generara un error ya que no puede acceder a una propiedad privada
+console.log(myCircle.radius);
+
+console.log(myCube.getArea());
+
+console.log(myCube.getRadius());
+
+
+// ahora se esta trabajando con 
+// PROTECTED
+
+class Shape {
+	protected area: number;
+	constructor(area : number){
+		this.area = area;
+	}
+}
+
+class Circle extends Shape {
+	radius : number;
+	constructor(radius: number){
+		super(Math.PI * radius ** 2);
+		this.radius = radius;
+	}
+	getArea() : number { 
+		return this.area;
+	}
+}
+
+
+// COMPATIBILIDAD DE TIPOS Y COERCION DE TIPOS DE TYPESCRIPT
+
+interface Named{
+	name : string;
+}
+
+let x : Named;
+let y = {name : "Alice", location : "Seattle"};
+x = y;
+
+
+interface Named{
+	name: string;
+}
+
+class Person {
+	name: string;
+}
+
+let p: Named;
+p = new Person();
+
+
+// compatabilidad de tipos 
+
+interface Perro {
+	nombre : string;
+	ladrar(): void;
+	
+}
+
+interface Mascota {
+	nombre : string;
+	ladrar(): void;
+
+}
+
+
+let perro: Perro = {nombre: 'Rex', ladrar: () => console.log("gua")};
+let mascota: Mascota = perro;
+
+
+// Typescript con mas propiedades a un tipo con menos
+
+interface Punto2D{
+	x:number;
+	y:number;
+
+}
+
+let punto3D = {x:1, y:2, z : 3};
+let punto2D: punto2D = punto3D;
+
+
+//Coercion de tipos 
+//lo cambia los valores automaticamente a otro tipo 
+
+let resultado = '5' + 3;
+let resta = '5' - 3;
+
+let num: number = '5';
+
+// Afirmaciones de tipos
+// no se convierten el valor, solo cambian como TYPESCRIPT lo trata
+
+let valor: unknow = 'hola mundo';
+
+let longitud2  = (<string>valor).length;
+
+let input = document.getElementById("email") as HTMLInputElement;
+input.value = 'test@ejemplo.com';
+
+// Importante : las afirmaciones no cambian el valor un runtime, solo afectan la verificacion de tipos:
+
+let numero: any = '123';
+let valor = numero as number;
+
+valor.toFixed(2);
+
+// Covarianza y Contravarianza
+
+// Covarianza
+
+class Animal {
+	nombre : string = ' ';
+}
+
+class Perro extends Animal{
+	ladrar(){}
+}
+
+class Gato extends Animal{
+	maullar(){}
+}
+
+// Covarianza en retornos
+
+type FuncionAnimal = () => Animal;
+type FuncionPerro = () => Perro;
+
+
+let funcionPerro: FuncionPerro = () => new Perro();
+// Retorna un perro es seguro cuando se espera un Animal
+let funcionAnimal: FuncionAnimal = funcionPerro; // Covariante
+
+
+// CONTRAVARIANZA
+
+type ManejandoPerro = (perro: Perro) => void;
+type ManejandoAnimal = (animal: Animal) => void;
+
+let manejarAnimal: ManejandoAnimal (animal) => {
+	console.log(animal.nombre);
+}
+
+// Una funcion que maneja cualquier Animal puede manejar Perros
+let manejarPerro: ManejandoPerro = manejarAnimal; // Contravariante
+
+
+// Un ejemplo practico de CONTRAVARIANZA
+
+class Vehiculo { 
+	arrancar{}
+}
+
+class Coche extends Vehiculo{
+	tocarBocina(){}
+}
+
+// Esto es seguro (cocarianza en retornos)
+let obtenerVehiculo: () => Vehiculo;
+let obtenerCoche: () => Coche = () => new Coche();
+
+obtenerVehiculo = obtenerCoche; // Un coche es un Vehiculo
+
+// esto es SEGURO (contravarianza en prametros)
+
+let usarCoche: (c: Coche) => void;
+let usarVehiculo: (v: Vehiculo) => void = (v) => v.arrancar();
+usarCoche = usarVehiculo; // puede usar cualquier vehiculo
+
+
+// Readonly y Partial Types
+
+interface Usuario{
+	id: number;
+	nombre: string;
+	email: string;
+}
+
+let usuario: Readonly<Usuario> = {
+	id: 1,
+	nombre: Ana,
+	email: 'ana@example.com'
+};
+
+usuario.nombre = 'Maria'; // error: no se puede modificar
+
+//Tambien existe readonly para propiedades individuales
+
+interface Config{
+	readonly apyKey: string;
+	timeout: number;
+}
+
+
+
+// Arrays readonly
+
+let numeros: readonly number[] = [1,2,3];
+
+numeros.push(4); // Error: push no existe en readonly array
+numeros[0] = 10; // Error: no se puede modificar
+
+// ReadonlyArray<T> es equivalente
+
+let lista: ReadonlyArray<string> = ['a', 'b'];
+
+// PARTIAL <T>
+
+interface Producto { 
+	id: number;
+	nombre: string;
+	precio: number;
+	descripcion: string;
+
+}
+
+// Util para actualizaciones parciales
+
+function actualizarProducto(
+	id: number,
+	cambios: Partial<Producto>
+):void{
+	// Puedes pasar solo las propiedades que quieres cambiar
+}
+
+actualizarProducto(1, {precio: 29.99}); // solo actualiza precio
+actualizarProducto(2, {nombre: 'Nuevo', descripcion: '...'});
+
+
+// COMBINANDO UTILITY TYPES
+
+interface Configuracion{
+	host: string;
+	puerto: number;
+	debug: boolean;
+}
+
+// Inmutable y con propiedades opcionales
+
+type ConfigParcialInmutable = Readonly<Partial<Configuracion>>;
+
+let config: ConfigParcialInmutable = {host: 'localhost'};
+config.puerto = 3000; // Error : readonly
+
+
+// OTROS UTILITY TYPES UTILES
+
+// Required : hace toas las propiedades obligatorias
+
+type ProductoComplete = Required<Partial<Producto>>;
+
+// Pick: selecciona propiedades especificas
+
+type ProductoResumen = Pick<Producto, 'id' | 'nombre'>;
+
+// Omit: excluye propiedades especificas
+
+type ProductoSinId = Omit<Producto, 'id'>;
+
+// Record: crea un objeto con claves y valores de tipos especificos
+
+type ProductoPorCategoria = Record<String, Producto[]>;
 
