@@ -1003,15 +1003,204 @@ if (pet instanceof Cat ) {
 
 
 
+// UNION TYPES Y TYPE NARROWING
+// te permiten que una variable tenga multiples tipos posibles 
+//
+let id : string | number;
+id = 'abc123';
+id = 456;
+
+function processValue(value: string | number){
+
+}
+
+// DISCRIMINATED UNIONS : usan una propiedad comun para distinguir entre tipos 
+
+interface Circle{
+	kind : 'circle', 
+	radius : number,
+}
+
+interface Square {
+	kind : 'square',
+	sideLength: number;
+}
+
+type Shape = Circle | Square;
+
+function getArea(shape: Shape): number{
+	switch (shape.kind){
+		case "circle":
+			return Math.PI * shape.radius ** 2;
+		case 'square': 
+			return shape.sideLength ** 2;
+	}
+}
+
+// TYPE NARROWING 
+// es cuando typescript infiere automaticamente un tipo mas especifico
+
+function example(value: string | number){
+	if(typeof valur === 'stirng'){
+		// Typescript sabe que aqui value es string
+		console.log(value.toUpperCase());
+	}
+	else{
+		// aquie value es number
+		console.log(value.toFixed(2));
+	}
+}
 
 
+// Narrowing con arrays
+
+function processArray(arr: string[] | null){
+	if(arr !== null){
+		// Typescript sabe arr es string[]
+	    arr.forEach(item => console.log(item));
+	}
+}
 
 
+// TYPES ALIASES
+
+// TE PERMITEN CREAR NOMBRES PRA TIPOS COMPLEJOS
+
+type ID = string | number;
+type User = {
+	id: ID;
+	name: string;
+	email: string;
+};
+
+type Point = {
+	x: number;
+	y: number;
+
+};
+
+// puedes cominar y extender tipos
+
+type UserWithRole = User & {
+	role: 'admin' | 'user';
+
+};
+
+// Generics - Fundaments
+// Permiten crear componentes reutilizables que funcionan con multiples tipos
+
+// Generic basico
+
+function indentity<T>(arg: T): T{
+	return arg;
+}
+
+let out1 = indentity<string>('hello'); //tipo explicito
+let out2 = indentity(42) // typescript infiere number
+
+// Array generic
+
+function firstElement<T>(arr: T[]): T | undefined{
+	return arr[0];
+}
+
+const num = firstElement([1,2,3]); // number | undefined
+const str = firstElement(['a', 'b']); // string | undefined
 
 
+// GENERICS CON INTERFACES
+
+interface Container<T>{
+	value: T;
+	getValue(): T;
+	setValue(value: T): void;
+}
+
+class NumberContainer implements Container<number>{
+	constructor(public value: number) {}
+
+	getValue(): number {
+		return this.value;
+	}
+
+	setValue(val: number): void{
+		this.value = val;
+	}
+}
 
 
+// INterface generica mas compleja
 
+interface Repository<T>{
+	items: T[];
+	add(item: T): void;
+	find(predicate: (item: T) => boolean): T | undefined;
+}
+
+
+// Generics con Clases
+
+class DataStorage<T> { 
+	private data: T[] = [];
+
+	addItem(item: T){
+		this.data.push(item);
+	}
+
+	removeItem(item: T){
+		const index = this.data.indexOf(item);
+		if(index > -1){
+			this.data.splice(index, 1);
+		}
+	}
+
+	getItems(): T[]{
+		return [...this.data];
+	}
+}
+
+const textStorage = new DataStorage<string>();
+textStorage.addItem('hello');
+textStorage.addItem('world');
+
+const numberStorage = new DataStorage<number>();
+numberStorage.addItem(1);
+numberStorage.addItem(2);
+
+
+// Generics con Constraints
+// limitan los tipos que pueden usarse con generics 
+
+// constraint basico 
+
+function getLength<T extends {length: number}> (item: T): number { 
+	return item.length;
+}
+
+getLength('hello'); // ok
+getLength([1,2,3]); // ok
+
+// getLength(123); // Error: number no tiene length
+
+//Constraint con multiples propiedades
+
+interface HasId{
+	id: number;
+}
+
+function findById<T extends HasId> (items: T[], id: number): T | undefined {
+	return items.find(items => item.id === id);
+}
+
+// constraint con keyof
+
+function getProperty<T,K extends keyof T>(obj: T, key:K): T[K]{
+	return obj[key];
+}
+
+const person = {name: 'jhon', age: 30};
+const name = getProperty(person, 'name'); // string
+const age = getProperty(person, 'age'); // number
 
 
 
