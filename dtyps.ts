@@ -844,3 +844,196 @@ type ProductoSinId = Omit<Producto, 'id'>;
 
 type ProductoPorCategoria = Record<String, Producto[]>;
 
+// READONLY TYPES
+
+interface Person{
+	name: string;
+	age : number;
+}
+
+// type ReadonlyPerson = Readonly<Person>
+
+let john: ReadonlyPerson = {name: 'John', age:25};
+john.age = 26;
+
+let numbers: number[] = [1,2,3,4,5];
+numbers[0] = 0;
+
+let numbers: ReadonlyArray<number> = [1,2,3,4,5];
+numbers[0] = 6; // este si permite leer el siguiente dato
+numbers.push(6); // tienes que tener en cuneta que los datos que se ingresan en readonly no son mutables 
+
+
+const person = {
+	name : 'John',
+	details : {
+		age : 25,
+		address : '123 Stret',
+	}
+} as const;
+
+person.name = 'Doe';
+person.details.age = 26;
+
+// Tipos parciales
+
+interface Employee{
+	id: number;
+	name : string;
+	department: string;
+}
+
+fucntion createEmployee(employee: Partial<Employee>){
+}
+
+createEmployee({ id: 1, name: 'John'});
+createEmployee({ id: 2, name: 'HR'});
+createEmployee({ id: 3, name: 'Engineering'});
+
+
+// Type aliases
+
+type Point = {
+	x: number;
+	y: number;
+};
+
+let p: Point = {x:10, y:20};
+
+type User = {
+	name: string;
+	email: string;
+};
+
+type UserPromise = Promise<User[]>;
+
+let getUsers: UserPromise;
+
+
+// Uniones e intersecciones Types 
+
+// Tipos de Uniones
+
+type StringOrNumber = string | number;
+let variable: StringOrNumber;
+variable = "Hello";
+variable = 42;
+variable = true;
+
+
+// INTERSECCION DE TIPOS
+
+type HasName = {name: string};
+type HasAge = {age: number};
+type Person = HasName & HasAge;
+let person: Person = {
+	name: 'Alice',
+	age: 30,
+};
+
+let invalidPerson: Person{
+	name: 'Bod'
+}; // esta mal porque se require una tipo person
+
+
+// Guardas de tipo y predicados de tipo 
+// Ayuda a reducir la cantidad de busqueda de una variable y devulven como valor un booleano
+
+function doSomething(value: string | number){
+	if(typeof value === 'string'){
+		console.log(value.toUpperCase());
+	}else{
+		console.log(value.toFixed(2));
+	}
+}
+
+// entonces este seria el siguiente ejemplo 
+
+function isString(value:any):value is string {
+	return typeof value === 'string';
+}
+
+function doSomething(value: string | number){
+	if(isString(value)){
+		console.log(value.toUpperCase());
+	}else{
+		console.log(toFixed(2));
+	}
+}
+
+// trabajando con Funciones Avanzadas
+
+// Advanced type system concepts
+// working with generics in Typescript 
+// Using decorators to simplify your code 
+// manipulacion de tipos con mapped y tipos condicionales
+// tipos de tecnicas de interfaces avanzadas 
+
+
+let value: number | string = Math.random() > 0.6 ? 'Hello ' : 123;
+
+if (typeof value === 'string'){
+	console.log(value.toUpperCase());
+}else{
+	console.log(value.toFixed(2));
+}
+
+
+/// AHORA TRABAJANDO CON INSTANCEOF
+
+class Cat{
+	meow(){
+		console.log('Meow!');
+	}
+}
+
+class Dog{
+	bark(){
+		console.log('Woof');
+	}
+}
+
+let pet: Cat | Dog = Math.random() > 0.5 ? new Cat() : new Dog();
+
+if (pet instanceof Cat ) {
+	pet.meow();
+}else{
+	pet.bark();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
