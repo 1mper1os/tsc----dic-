@@ -463,6 +463,29 @@ myCar.model = 'Corolla';
 myCar.year = 2010;
 
 
+class Avenger{
+    private name:string;
+    public team: string;
+    public realName?: string;
+    static AvgAge: number = 35;
+
+    constructor(name: string, team: string, realName?: string) {
+        this.name = name;
+        this.team = team;
+        this.realName = realName;
+    }
+
+    
+
+}
+
+const atman: Avenger = new Avenger('Antman', 'Capitan');
+const antman: Avenger = new Avenger();
+console.log(antman.AvgAge);
+console.log(antman);
+console.log(atman);
+
+
 // uan forma de recibir valores de forma mas rapida es de la siguiente manera 
 
 class Carro{
@@ -489,6 +512,19 @@ class Caro {
 		public year: number;
 	){}
 }
+
+class Avenger {
+    static avgAge: number = 35;
+
+    constructor (
+        public name: string,
+        public team: string,
+        public realName?: string,
+        avgAge: number = 55, // tienes que tener en cuenta que se debe de iniciar y no se puede tener un static dentro de un constructor 
+    )
+        {
+            Avenger.avgAge = avgAge;
+        }
 
 
 // Trabajando las herencias en las clases 
